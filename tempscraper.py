@@ -54,7 +54,7 @@ webdriver = webdriver.Chrome(
 )
 
 # default search query
-search_query = "03 2011"
+search_query = "March 2011"
 
 
 
@@ -78,6 +78,18 @@ with webdriver as driver:
     #search.send_keys(search_query + Keys.RETURN)
 
     goto_history = driver.find_element_by_id("history-tab").click()
+    the_input = driver.find_element_by_id("year_month_selector")
+
+    '''
+    the_input.click()
+    for i in range(13):
+        the_input.send_keys(Keys.BACKSPACE)
+    '''
+
+    the_input.send_keys(Keys.BACKSPACE*13 + search_query + Keys.RETURN)
+
+    time.sleep(2)
+
     results = driver.find_elements_by_class_name("high.text-right")
     #print(results)
     for ind_res in results:
@@ -87,6 +99,10 @@ with webdriver as driver:
       
     #goto_history.send_keys(Keys.RETURN)
     
+    my = driver.find_elements_by_class_name("history_month_year_name")
+    for data in my:
+        print(data.text)
+
     # wait
 
     #wait.until(presence_of_all_elements_located(By.ID, "results_area"))
